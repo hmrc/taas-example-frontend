@@ -62,7 +62,7 @@ object ControllerConfiguration extends ControllerConfig {
 }
 
 object LoggingFilter extends FrontendLoggingFilter with MicroserviceFilterSupport {
-  override def controllerNeedsLogging(controllerName: String) = false
+  override def controllerNeedsLogging(controllerName: String) = true
 }
 
 object AuditFilter extends FrontendAuditFilter with RunMode with AppName with MicroserviceFilterSupport {
