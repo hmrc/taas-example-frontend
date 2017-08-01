@@ -83,6 +83,6 @@ object WSAll extends WSHttp {
 object LocalTemplateRenderer extends ServicesConfig {
   lazy val localTemplateRenderer = new MustacheRenderer(
     WSAll,
-    baseUrl("frontend-template-provider") + "/frontend-template-provider/serve-template"
+    baseUrl("frontend-template-provider")
   )
 }
