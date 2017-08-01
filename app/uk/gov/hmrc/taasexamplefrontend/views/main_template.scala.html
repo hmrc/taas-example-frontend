@@ -34,7 +34,7 @@
 }
 
 
-@FrontendGlobal.localTemplateRenderer.parseTemplate(layouts.article(mainContent), Map(
+@FrontendGlobal.localTemplateRenderer.renderDefaultTemplate(layouts.article(mainContent), Map(
     "pageTitle" -> title,
     "sidebar" -> sidebar,
     "betaBanner" -> true,

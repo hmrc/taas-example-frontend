@@ -29,7 +29,7 @@
   <p>@message</p>
 }
 
-@FrontendGlobal.localTemplateRenderer.parseTemplate(layouts.article(mainContent), Map(
+@FrontendGlobal.localTemplateRenderer.renderDefaultTemplate(layouts.article(mainContent), Map(
  "pageTitle" -> pageTitle,
  "mainContentHeader" -> contentHeader
 ))
