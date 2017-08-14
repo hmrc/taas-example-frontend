@@ -15,8 +15,25 @@
  *@
 
 @import uk.gov.hmrc.play.http.HeaderCarrier
+@import collection.JavaConversions._
 @()(implicit request: Request[_], messages: Messages, hc: HeaderCarrier)
 
 @uk.gov.hmrc.taasexamplefrontend.views.html.main_template(title = "Hello from taas-example-frontend", bodyClasses = None) {
     <h1>Hello from taas-example-frontend !</h1>
+
+    <h3>Environment Variables</h3>
+    <dl>
+    @for((key, value) <- System.getenv()) {
+    <dt>@key</dt><dd>@value</dd>
+    }
+    </dl>
+    <h3>Properties</h3>
+
+    <dl>
+    @for((key, value) <- System.getProperties()){
+     <di>@key</di><dd>@value</dd></dl><br>
+    }
+    </dl>
 }
+
+

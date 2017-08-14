@@ -31,9 +31,10 @@ import uk.gov.hmrc.play.frontend.bootstrap.DefaultFrontendGlobal
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.http.hooks.HttpHook
 import uk.gov.hmrc.play.http.logging.filters.FrontendLoggingFilter
-import uk.gov.hmrc.play.http.ws.WSHttp
-import uk.gov.hmrc.renderer.MustacheRenderer
+import uk.gov.hmrc.play.http.ws.{WSGet, WSHttp}
+import uk.gov.hmrc.renderer.TemplateRenderer
 
+import scala.concurrent.duration._
 
 object FrontendGlobal
   extends DefaultFrontendGlobal {
@@ -81,8 +82,11 @@ object WSAll extends WSHttp {
 }
 
 object LocalTemplateRenderer extends ServicesConfig {
-  lazy val localTemplateRenderer = new MustacheRenderer(
-    WSAll,
-    baseUrl("frontend-template-provider")
-  )
+  lazy val localTemplateRenderer = new TemplateRenderer {
+    override def templateServiceBaseUrl: String = baseUrl("frontend-template-provider")
+    override def refreshAfter: Duration = 10 minutes
+    override def connection: WSGet = new WSGet {
+      override val hooks: Seq[HttpHook] = Seq()
+    }
+  }
 }
