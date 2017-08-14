@@ -16,24 +16,55 @@
 
 @import uk.gov.hmrc.play.http.HeaderCarrier
 @import collection.JavaConversions._
+@import play.api.Play
 @()(implicit request: Request[_], messages: Messages, hc: HeaderCarrier)
 
 @uk.gov.hmrc.taasexamplefrontend.views.html.main_template(title = "Hello from taas-example-frontend", bodyClasses = None) {
+
     <h1>Hello from taas-example-frontend !</h1>
 
-    <h3>Environment Variables</h3>
-    <dl>
-    @for((key, value) <- System.getenv()) {
-    <dt>@key</dt><dd>@value</dd>
-    }
-    </dl>
-    <h3>Properties</h3>
 
-    <dl>
-    @for((key, value) <- System.getProperties()){
-     <di>@key</di><dd>@value</dd></dl><br>
+    @defining(List("template-amazon-s3-host",
+    "template-amazon-s3-port",
+    "template-amazon-s3-protocol",
+    "microservice.services.frontend-template-provider.host",
+    "microservice.services.frontend-template-provider.port",
+    "microservice.services.frontend-template-provider.protocol")) { targetvalues =>
+
+        <h3>Environment Variables</h3>
+        <dl>
+        @for(value <- targetvalues) {
+            <dt>@value</dt><dd>@System.getenv(value)</dd>
+        }
+        </dl>
+        <h3>Properties</h3>
+
+        <dl>
+            @for(value <- targetvalues) {
+            <di>@value</di><dd>@System.getProperty(value)</dd>
+        }
+        </dl>
+
+        @defining(Play.current.configuration){ config =>
+            <h3>Play Configuration</h3>
+            <dl>
+                <h4>global</h4>
+                @for(value <- targetvalues) {
+                    <di>@value</di><dd>@config.getString(value)</dd>
+                }
+                <h4>Dev</h4>
+                @for(value <- targetvalues) {
+                    <di>Dev.@value</di><dd>@config.getString("Dev." + value)</dd>
+                }
+                <h4>Prod</h4>
+                @for(value <- targetvalues) {
+                    <di>Prod.@value</di><dd>@config.getString("Prod." + value)</dd>
+                }
+
+
+            </dl>
+        }
     }
-    </dl>
 }
 
 
