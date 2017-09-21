@@ -16,41 +16,30 @@
 
 package uk.gov.hmrc.taasexamplefrontend.controllers
 
-import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import play.api.http._
-import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import uk.gov.hmrc.play.test.UnitSpec
-import uk.gov.hmrc.play.test.{WithFakeApplication, UnitSpec}
+import play.api.mvc.Result
+
+import scala.concurrent.duration.Duration
+import scala.concurrent.Await
+
+import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 
 
-class HelloWorldControllerSpec extends UnitSpec with WithFakeApplication{
+class HelloWorldControllerSpec extends UnitSpec with WithFakeApplication {
 
-  val fakeRequest = FakeRequest("GET", "/")
+  val fakeRequest = FakeRequest("GET", "/taas-example-frontend/hello-world")
+  val action = new HelloWorld().helloWorld
+  val fa = fakeApplication
 
+  "GET /taas-example-frontend/" should {
+    "return an http status 200" in {
+      val result: Result = Await.ready(action.apply(fakeRequest), Duration(10, "seconds"))
+      result.header.status shouldBe  200
+    }
 
-  "GET /" should {
-    "fake test" in {
-      1 shouldBe 1
+    "return a text/html Content-Type" in {
+      val result: Result = Await.ready(action.apply(fakeRequest), Duration(10, "seconds"))
+      result.body.contentType.getOrElse("") should include("text/html")
     }
   }
-//
-//  "GET /" should {
-//    "return 200" in {
-//      val result = HelloWorld.helloWorld(fakeRequest)
-//      status(result) shouldBe Status.OK
-//    }
-//
-//    "return HTML" in {
-//      val result = HelloWorld.helloWorld(fakeRequest)
-//      contentType(result) shouldBe Some("text/html")
-//      charset(result) shouldBe Some("utf-8")
-//    }
-//
-//
-//  }
-
-
 }
