@@ -26,6 +26,7 @@ package uk.gov.hmrc.taasexamplefrontend.templateService
   import org.fusesource.scalate.{Template, TemplateEngine}
   import scala.concurrent.Await
   import scala.concurrent.duration._
+  import uk.gov.hmrc.taasexamplefrontend.FrontendAppConfig.templatePath
 
   class MustacheRenderer(
                           val connection: WSGet = new WSGet {
@@ -71,6 +72,6 @@ package uk.gov.hmrc.taasexamplefrontend.templateService
     }
 
 
-    def renderDefaultTemplate = renderTemplate("/govuk-template/templates/mustache/preprod/govuk-template.mustache.html") _
+    def renderDefaultTemplate = renderTemplate(templatePath) _
   }
 
