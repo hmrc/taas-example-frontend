@@ -30,7 +30,7 @@ object FrontendAppConfig extends AppConfig with ServicesConfig {
 
   private def loadConfig(key: String) = configuration.getString(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
 
-  val templatePath: String = configuration.getString(s"frontend-template-provider.path").getOrElse("/template/mustache")
+  val templatePath: String = configuration.getString(s"microservice.services.frontend-template-provider.path").getOrElse("/template/mustache")
 
   private val contactHost = configuration.getString(s"contact-frontend.host").getOrElse("")
   private val contactFormServiceIdentifier = "MyService"
