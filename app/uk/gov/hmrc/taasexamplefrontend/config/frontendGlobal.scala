@@ -31,9 +31,9 @@ import uk.gov.hmrc.play.frontend.bootstrap.DefaultFrontendGlobal
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.http.hooks.HttpHook
 import uk.gov.hmrc.play.http.logging.filters.FrontendLoggingFilter
-import uk.gov.hmrc.play.http.ws.{WSGet, WSHttp}
-import uk.gov.hmrc.renderer.TemplateRenderer
-
+import uk.gov.hmrc.play.http.ws.WSGet
+import templateService.MustacheRenderer
+import uk.gov.hmrc.play.config.ServicesConfig
 import scala.concurrent.duration._
 
 object FrontendGlobal
@@ -43,7 +43,6 @@ object FrontendGlobal
   override val loggingFilter = LoggingFilter
   override val frontendAuditFilter = AuditFilter
   lazy val localTemplateRenderer = LocalTemplateRenderer.localTemplateRenderer
-
 
   override def onStart(app: Application) {
     super.onStart(app)
@@ -77,16 +76,14 @@ object AuditFilter extends FrontendAuditFilter with RunMode with AppName with Mi
   override def controllerNeedsAuditing(controllerName: String) = false
 }
 
-object WSAll extends WSHttp {
-  override val hooks: Seq[HttpHook] = Seq()
-}
 
 object LocalTemplateRenderer extends ServicesConfig {
-  lazy val localTemplateRenderer = new TemplateRenderer {
-    override def templateServiceBaseUrl: String = baseUrl("frontend-template-provider")
-    override def refreshAfter: Duration = 10 minutes
-    override def connection: WSGet = new WSGet {
-      override val hooks: Seq[HttpHook] = Seq()
-    }
+
+  val connection: WSGet = new WSGet {
+    override val hooks: Seq[HttpHook] = Seq()
   }
+  val refreshAfter = Duration(10, MINUTES)
+  val location: String  = baseUrl("frontend-template-provider")
+
+  lazy val localTemplateRenderer: MustacheRenderer = new MustacheRenderer(connection, location, refreshAfter )
 }

@@ -17,11 +17,12 @@ object FrontendBuild extends Build with MicroService {
     "uk.gov.hmrc" %% "play-partials" % "5.4.0",
     "uk.gov.hmrc" %% "play-authorised-frontend" % "6.4.0",
     "uk.gov.hmrc" %% "play-config" % "4.3.0",
-    "uk.gov.hmrc" %% "local-template-renderer" % "0.10.0",
     "uk.gov.hmrc" %% "logback-json-logger" % "3.1.0",
     "uk.gov.hmrc" %% "play-health" % "2.1.0",
     "uk.gov.hmrc" %% "play-ui" % "7.4.0",
-    "uk.gov.hmrc" %% "http-caching-client" % "6.2.0"
+    "uk.gov.hmrc" %% "http-caching-client" % "6.2.0",
+    "org.scalatra.scalate" %% "scalate-core" % "1.7.1"
+
   )
 
   def test(scope: String = "test") = Seq(
