@@ -27,15 +27,16 @@ import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 
 class HelloWorldControllerSpec extends UnitSpec with WithFakeApplication {
 
-  "GET /" should {
-    "fake test" in {
+
+  "FAKE /" should {
+    "be a fake test" in {
       1 shouldBe 1
     }
   }
 
 
-  /*=====================================================================================
-  Disabled to allow ci-open to build the application
+  /* =========================================================================================
+    Disabled temporarily to allow application to build on ci-open
 
   val fakeRequest = FakeRequest("GET", "/taas-example-frontend/hello-world")
   val action = new HelloWorld().helloWorld
@@ -52,5 +53,7 @@ class HelloWorldControllerSpec extends UnitSpec with WithFakeApplication {
       result.body.contentType.getOrElse("") should include("text/html")
     }
   }
-  ========================================================================================*/
+  ============================================================================================
+  */
+
 }

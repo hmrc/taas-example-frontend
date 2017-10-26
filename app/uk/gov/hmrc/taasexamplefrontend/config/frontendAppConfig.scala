@@ -18,6 +18,7 @@ package uk.gov.hmrc.taasexamplefrontend
 
 import play.api.Play.{configuration, current}
 import uk.gov.hmrc.play.config.ServicesConfig
+import play.api.Logger
 
 trait AppConfig {
   val analyticsToken: String
@@ -31,7 +32,8 @@ object FrontendAppConfig extends AppConfig with ServicesConfig {
   private def loadConfig(key: String) = configuration.getString(key).getOrElse(throw new Exception(s"Missing configuration key: $key"))
 
   val templatePath: String = configuration.getString(s"microservice.services.frontend-template-provider.path").getOrElse("/template/mustache")
-
+  val templateLocation = baseUrl("frontend-template-provider") + templatePath
+  Logger.debug(s"template path is  $templateLocation")
   private val contactHost = configuration.getString(s"contact-frontend.host").getOrElse("")
   private val contactFormServiceIdentifier = "MyService"
 

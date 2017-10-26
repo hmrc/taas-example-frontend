@@ -20,6 +20,7 @@ package uk.gov.hmrc.taasexamplefrontend.templateService
 
   import com.google.common.cache.{CacheBuilder, CacheLoader, LoadingCache}
   import play.twirl.api.Html
+  import play.api.Logger
   import uk.gov.hmrc.play.http.HeaderCarrier
   import uk.gov.hmrc.play.http.ws.WSGet
   import uk.gov.hmrc.play.http.hooks.HttpHook
@@ -52,6 +53,8 @@ package uk.gov.hmrc.taasexamplefrontend.templateService
     protected val templateEngine = new TemplateEngine()
 
     private implicit val hc = HeaderCarrier()
+
+
 
     lazy val cache: LoadingCache[String, Template] =
       CacheBuilder.newBuilder()
