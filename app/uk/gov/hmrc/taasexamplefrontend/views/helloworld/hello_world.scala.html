@@ -17,11 +17,18 @@
 @import uk.gov.hmrc.play.http.HeaderCarrier
 @import collection.JavaConversions._
 @import play.api.Play
+@import uk.gov.hmrc.taasexamplefrontend.FrontendAppConfig.templatePath
+@import uk.gov.hmrc.taasexamplefrontend.FrontendAppConfig.templateLocation
 @()(implicit request: Request[_], messages: Messages, hc: HeaderCarrier)
 
 @uk.gov.hmrc.taasexamplefrontend.views.html.main_template(title = "Hello from taas-example-frontend", bodyClasses = None) {
 
     <h1>Hello from taas-example-frontend !</h1>
+
+    <h2>Template Locations</h2>
+    <dl><dt>Template Path</dt><dd>@templatePath</dd></dl>
+    <dl><dt>Template Location</dt><dd>@templateLocation</dd></dl>
+
 
 
     @defining(List("template-amazon-s3-host",

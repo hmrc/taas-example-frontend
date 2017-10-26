@@ -22,7 +22,6 @@ import scala.concurrent.Future
 import play.api.Play.current
 import play.api.i18n.Messages.Implicits._
 
-
 object HelloWorld extends HelloWorld
 
 class HelloWorld extends FrontendController {
