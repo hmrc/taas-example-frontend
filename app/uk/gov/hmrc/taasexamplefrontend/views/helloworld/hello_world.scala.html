@@ -21,13 +21,16 @@
 @import uk.gov.hmrc.taasexamplefrontend.FrontendAppConfig.templateLocation
 @()(implicit request: Request[_], messages: Messages, hc: HeaderCarrier)
 
-@uk.gov.hmrc.taasexamplefrontend.views.html.main_template(title = "Hello from taas-example-frontend", bodyClasses = None) {
+@uk.gov.hmrc.taasexamplefrontend.views.html.main_template(title = "Hello from taas-example-frontend",
+                                                          bodyClasses = None) {
 
     <h1>Hello from taas-example-frontend !</h1>
 
-    <h2>Template Locations</h2>
-    <dl><dt>Template Path</dt><dd>@templatePath</dd></dl>
-    <dl><dt>Template Location</dt><dd>@templateLocation</dd></dl>
+    <h3>Template Details</h3>
+    <table>
+        <tr><td>Template Path</td><td>@templatePath</td></tr>
+        <tr><td>Template Location</td><td>@templateLocation</td></tr>
+    </table>
 
 
 
@@ -39,37 +42,35 @@
     "microservice.services.frontend-template-provider.protocol")) { targetvalues =>
 
         <h3>Environment Variables</h3>
-        <dl>
+        <table>
         @for(value <- targetvalues) {
-            <dt>@value</dt><dd>@System.getenv(value)</dd>
+            <tr><td>@value</td><td>@System.getenv(value)</td></tr>
         }
-        </dl>
+        </table>
+
         <h3>Properties</h3>
-
-        <dl>
+        <table>
             @for(value <- targetvalues) {
-            <di>@value</di><dd>@System.getProperty(value)</dd>
+            <tr><td>@value</td><td>@System.getProperty(value)</td></tr>
         }
-        </dl>
+        </table>
 
-        @defining(Play.current.configuration){ config =>
-            <h3>Play Configuration</h3>
-            <dl>
-                <h4>global</h4>
+        <h3>Play Configuration</h3>
+            @defining(Play.current.configuration){ config =>
+            <table style="white-space: nowrap"  >
+                <tr><th colspan="2" align="left">global</th></tr>
                 @for(value <- targetvalues) {
-                    <di>@value</di><dd>@config.getString(value)</dd>
+                <tr><td>@value</td><td>@config.getString(value)</td></tr>
                 }
-                <h4>Dev</h4>
+                <tr><th colspan="2" align="left">Dev</th></tr>
                 @for(value <- targetvalues) {
-                    <di>Dev.@value</di><dd>@config.getString("Dev." + value)</dd>
+                    <tr><td>Dev.@value</td><td>@config.getString("Dev." + value)</td></tr>
                 }
-                <h4>Prod</h4>
+                <tr><th colspan="2" align="left">Prod</th></tr>
                 @for(value <- targetvalues) {
-                    <di>Prod.@value</di><dd>@config.getString("Prod." + value)</dd>
+                    <tr><td>Prod.@value</td><td>@config.getString("Prod." + value)</td></tr>
                 }
-
-
-            </dl>
+            </table>
         }
     }
 }
